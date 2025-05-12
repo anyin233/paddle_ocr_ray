@@ -1,0 +1,12 @@
+__pycache__
+*.tar.gz
+*.egg-info
+*.egg
+*.whl
+*.pdb
+
+# Ignore Paddlepaddle Model Files
+*.pdiparams
+*.pdiparams.info
+*.pdmodel
+ppocr_keys_v1.txt
