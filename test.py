@@ -1,7 +1,5 @@
 import requests
 
-from paddleocr import draw_ocr
-
 # 读取并编码图片
 img_path = 'demo_text_ocr.jpg'
 
@@ -15,8 +13,9 @@ resp = requests.post(url, files=payload)
 print("Status Code:", resp.status_code)
 print("OCR Result:", resp.json())
 
-import httpx
 import asyncio
+
+import httpx
 
 
 async def main():
@@ -37,13 +36,3 @@ async def main():
 if __name__ == "__main__":
     asyncio.run(main())
 
-# ocr_result = resp.json()
-# from PIL import Image
-# result = ocr_result[0]
-# image = Image.open(img_path).convert('RGB')
-# boxes = [line[0] for line in result]
-# txts = [line[1][0] for line in result]
-# scores = [line[1][1] for line in result]
-# im_show = draw_ocr(image, boxes, txts, scores, font_path='/home/yanweiye/Project/PaddleOCR/doc/fonts/simfang.ttf')
-# im_show = Image.fromarray(im_show)
-# im_show.save('result.jpg')

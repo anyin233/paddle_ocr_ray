@@ -1,14 +1,11 @@
-import ray.serve
-from modules.ocr.paddle_ocr_v4.utils import *
-
 import math
-import numpy as np
+
 import cv2
-import paddle.inference as paddle_infer
+import numpy as np
 import ray
-import os
+import ray.serve
 
-
+from modules.ocr.paddle_ocr_v4.utils import *
 
 
 @ray.serve.deployment(num_replicas=2, ray_actor_options={"num_cpus": 1, "num_gpus": 1})
@@ -142,7 +139,7 @@ class PaddleOCRv4TextDetector:
                     else:
                         unclipped_box_on_content_map = box_points_on_content_map # Fallback
 
-            except Exception as e:
+            except Exception:
                 # print(f"Pyclipper unclip error: {e}. Using original box.")
                 unclipped_box_on_content_map = box_points_on_content_map
 

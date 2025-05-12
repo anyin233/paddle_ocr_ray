@@ -1,15 +1,15 @@
+import cv2  # OpenCV for image manipulation
 import numpy as np
-import cv2 # OpenCV for image manipulation
-from modules.ocr.paddle_ocr_v4 import PaddleOCRv4TextDetector, PaddleOCRv4TextRecognizer
-
 import ray
-from fastapi import FastAPI
 import ray.serve
-from fastapi import File, UploadFile
+from fastapi import FastAPI, File, UploadFile
+
+from modules.ocr.paddle_ocr_v4 import PaddleOCRv4TextDetector, PaddleOCRv4TextRecognizer
 
 app = FastAPI()
 
 from modules.ocr.paddle_ocr_v4.utils import *
+
 
 @ray.serve.deployment(num_replicas=2, ray_actor_options={"num_cpus": 1, "num_gpus": 0})
 @ray.serve.ingress(app)

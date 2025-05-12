@@ -1,7 +1,7 @@
-import random
 import os
-import numpy as np
+import random
 
+import numpy as np
 import paddle.inference as paddle_infer
 
 random_name_choices = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'

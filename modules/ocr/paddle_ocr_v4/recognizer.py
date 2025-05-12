@@ -1,8 +1,9 @@
-import numpy as np
 import cv2
+import numpy as np
 import ray
 
 from modules.ocr.paddle_ocr_v4.utils import *
+
 
 @ray.serve.deployment(num_replicas = 2, ray_actor_options={"num_cpus": 1, "num_gpus": 1})
 class PaddleOCRv4TextRecognizer:
