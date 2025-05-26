@@ -1,0 +1,57 @@
+# This file was generated using the `serve build` command on Ray v2.46.0.
+
+proxy_location: EveryNode
+
+http_options:
+
+  host: 0.0.0.0
+
+  port: 8001
+
+grpc_options:
+
+  port: 9001
+
+  grpc_servicer_functions: []
+
+logging_config:
+
+  encoding: TEXT
+
+  log_level: INFO
+
+  logs_dir: null
+
+  enable_access_log: true
+
+  additional_log_standard_attrs: []
+
+applications:
+
+- name: ocr_app
+
+  route_prefix: /
+
+  import_path: services.ocr.paddle_ocr_v4:ocr_app
+
+  runtime_env: {}
+
+  deployments:
+
+  - name: PaddleOCRv4TextDetector
+    num_replicas: auto
+    ray_actor_options:
+      num_cpus: 1.0
+      num_gpus: 0.1
+
+  - name: PaddleOCRv4TextRecognizer
+    num_replicas: auto
+    ray_actor_options:
+      num_cpus: 1.0
+      num_gpus: 0.1
+
+  - name: PaddleOCRv4Service
+    num_replicas: auto
+    ray_actor_options:
+      num_cpus: 1.0
+      num_gpus: 0.0

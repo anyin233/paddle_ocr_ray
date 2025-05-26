@@ -46,6 +46,17 @@ class PaddleOCRv4Service:
         
         return await results
 
-detector = PaddleOCRv4TextDetector.bind(DET_MODEL_FILE, DET_PARAMS_FILE, use_gpu=True)
-recoginzer = PaddleOCRv4TextRecognizer.bind(REC_MODEL_FILE, CHAR_DICT_PATH, REC_PARAMS_FILE, use_gpu=True)
+ocr_detector_cls = ray.serve.deployment(
+    PaddleOCRv4TextDetector,
+    num_replicas=1,
+    ray_actor_options={"num_cpus": 1, "num_gpus": 0.5}
+)
+ocr_recognizer_cls = ray.serve.deployment(
+    PaddleOCRv4TextRecognizer,
+    num_replicas=1,
+    ray_actor_options={"num_cpus": 1, "num_gpus": 0.5}
+)
+
+detector = ocr_detector_cls.bind(DET_MODEL_FILE, DET_PARAMS_FILE, use_gpu=True)
+recoginzer = ocr_recognizer_cls.bind(REC_MODEL_FILE, CHAR_DICT_PATH, REC_PARAMS_FILE, use_gpu=True)
 ocr_app = PaddleOCRv4Service.bind(detector, recoginzer)

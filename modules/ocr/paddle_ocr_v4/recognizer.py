@@ -5,7 +5,7 @@ import ray
 from modules.ocr.paddle_ocr_v4.utils import *
 
 
-@ray.serve.deployment(num_replicas = 2, ray_actor_options={"num_cpus": 1, "num_gpus": 1})
+# @ray.serve.deployment(num_replicas = 2, ray_actor_options={"num_cpus": 1, "num_gpus": 1})
 class PaddleOCRv4TextRecognizer:
     def __init__(self, model_file, char_dict_file, params_file, use_gpu=False, device_id=0):
         self.predictor = load_predictor(model_file, params_file, use_gpu=use_gpu, device_id=device_id)
