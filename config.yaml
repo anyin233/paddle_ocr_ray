@@ -42,16 +42,17 @@ applications:
     num_replicas: auto
     ray_actor_options:
       num_cpus: 1.0
-      num_gpus: 0.1
+      num_gpus: 0.3
 
   - name: PaddleOCRv4TextRecognizer
     num_replicas: auto
     ray_actor_options:
       num_cpus: 1.0
-      num_gpus: 0.1
+      num_gpus: 0.3
 
   - name: PaddleOCRv4Service
-    num_replicas: auto
+    num_replicas: 1
+    max_ongoing_requests: 50
     ray_actor_options:
       num_cpus: 1.0
       num_gpus: 0.0

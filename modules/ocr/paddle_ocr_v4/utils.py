@@ -9,17 +9,20 @@ def random_name(length=8):
     """生成随机文件名"""
     return ''.join(random.choice(random_name_choices) for _ in range(length))
 
+BASE_DIR = "/app"
+
 # --- 1. 配置区域 ---
 # 检测模型配置
-DET_MODEL_DIR = "/home/yanweiye/Project/paddleocr_ray/inference/ch_PP-OCRv4_det_server_infer"
+DET_MODEL_DIR = os.path.join(BASE_DIR, "inference", "ch_PP-OCRv4_det_server_infer")
 DET_MODEL_FILE = os.path.join(DET_MODEL_DIR, "inference.pdmodel")
 DET_PARAMS_FILE = os.path.join(DET_MODEL_DIR, "inference.pdiparams")
 
 # 识别模型配置
-REC_MODEL_DIR = "/home/yanweiye/Project/paddleocr_ray/inference/ch_PP-OCRv4_rec_server_infer"
+
+REC_MODEL_DIR = os.path.join(BASE_DIR, "inference", "ch_PP-OCRv4_rec_server_infer") 
 REC_MODEL_FILE = os.path.join(REC_MODEL_DIR, "inference.pdmodel")
 REC_PARAMS_FILE = os.path.join(REC_MODEL_DIR, "inference.pdiparams")
-CHAR_DICT_PATH = os.path.join(REC_MODEL_DIR, "/home/yanweiye/Project/paddleocr_ray/inference/ppocr_keys_v1.txt")
+CHAR_DICT_PATH = os.path.join(REC_MODEL_DIR, os.path.join(BASE_DIR, "inference", "ppocr_keys_v1.txt"))
 
 REC_IMAGE_SHAPE_H = 48
 
