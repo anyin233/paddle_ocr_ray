@@ -3,6 +3,7 @@ import numpy as np
 import ray
 import ray.serve
 from fastapi import FastAPI, File, UploadFile
+import time
 
 from modules.ocr.paddle_ocr_v4 import PaddleOCRv4TextDetector, PaddleOCRv4TextRecognizer
 
@@ -20,7 +21,7 @@ class PaddleOCRv4Service:
 
     @app.post("/ocr")
     async def ocr_endpoint(self, image: UploadFile = File(...)):
-
+        received_timestamp = time.time()
         contents = image.file.read()
         img_byte_arr = np.fromstring(contents, np.uint8)
         original_cv2_image = cv2.imdecode(img_byte_arr, cv2.IMREAD_COLOR)
@@ -44,7 +45,10 @@ class PaddleOCRv4Service:
         
         results = self.recognizer.predict.remote(**recognizer_input)
         
-        return await results
+        return  {
+            "result": await results, 
+            "received": received_timestamp
+        }
 
 ocr_detector_cls = ray.serve.deployment(
     PaddleOCRv4TextDetector,
